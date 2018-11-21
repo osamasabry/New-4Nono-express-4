@@ -5,6 +5,8 @@ var LocalStrategy    = require('passport-local').Strategy;
 
 var User       = require('../Model/nono_cp_users');
 
+// console.log(User);
+
 module.exports = function(passport) {
 
     // Maintaining persistent login sessions
@@ -26,8 +28,8 @@ module.exports = function(passport) {
     },
     function(req, user_name, password, done) {
        process.nextTick(function() {
-            console.log(user_name);
-            User.findOne({ 'User_Name' :  user_name }, function(err, user) {
+            // console.log(user_name,password);
+            User.findOne({ 'CP_User_Name' :  user_name }, function(err, user) {
                 if (err){ return done(err);}
                 if (!user)
                   return done(null,false,{status:false,message:'user is not exist'});
@@ -55,11 +57,13 @@ module.exports = function(passport) {
                         return done(null, false, req.flash('signuperror', 'User already exists'));
                     } else {
                         var newUser            = new User();
-			newUser.user.username    = req.body.username;
+			            newUser.user.username    = req.body.username;
                         newUser.user.email    = email;
-                        newUser.user.password = newUser.generateHash(password);
-			newUser.user.name	= ''
-			newUser.user.address	= ''
+                        // newUser.user.password = newUser.generateHash(password);
+                        newUser.user.password = password;
+
+			            newUser.user.name	= ''
+			            newUser.user.address	= ''
                         newUser.save(function(err) {
                             if (err)
                                 throw err;

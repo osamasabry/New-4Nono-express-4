@@ -17,9 +17,11 @@ var nono_CpUserSchema = mongoose.Schema({
 // };
 
 nono_CpUserSchema.methods.verifyPassword = function(password) {
-    return bcrypt.compareSync(password, this.CP_User_Password);
+    if(password.localeCompare(this.CP_User_Password) == 0)
+        return 1;
+    else
+        return 0;
 };
-
 
 // nono_CpUserSchema.methods.updatePassword = function(password) {
 //     this.CP_User_Password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
