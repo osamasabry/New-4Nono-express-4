@@ -3,7 +3,7 @@ var Categories = require('../Model/nono_categories');
 
 module.exports = {
 
-	addCategory:function(request,res){
+	addCategory:function(request,response){
 		Categories.getLastCode(function(err,category){
 			if (category) 
 				insetIntoCategory(category.Category_Code+1);
@@ -40,7 +40,7 @@ module.exports = {
 		}
 	},
 
-	editCategory:function(request,res){
+	editCategory:function(request,response){
 		var newvalues = { $set: {
 				Category_Name 						: request.body.name,
 				Category_Description 				: request.body.desc,
@@ -71,7 +71,7 @@ module.exports = {
 		})
 	},
 
-	getAllCategories:function(request,res){
+	getAllCategories:function(request,response){
 		Categories.find({}, function(err, Category) {
 		    if (err){
 		    	response.send({message: 'Error'});
@@ -83,7 +83,7 @@ module.exports = {
     	}).sort({Category_Code:-1}).limit(20)
 	},
 
-	getActiveCategories:function(request,res){
+	getActiveCategories:function(request,response){
 		Categories.find({Category_IsActive:1}, function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});

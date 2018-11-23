@@ -4,7 +4,7 @@ var Tags = require('../Model/nono_tags');
 module.exports = {
 
 
-	addTag:function(request,res){
+	addTag:function(request,response){
 		Tags.getLastCode(function(err,tag){
 			if (tag) 
 				insetIntoTag(tag.Tag_Code+1);
@@ -39,7 +39,7 @@ module.exports = {
 		}
 	},
 
-	editTag:function(request,res){
+	editTag:function(request,response){
 		var newvalues = { $set: {
 				Tag_Name 					: request.body.name,
 				Tag_Description 			: request.body.desc,
@@ -72,7 +72,7 @@ module.exports = {
 		})
 	},
 
-	getAllTags:function(request,res){
+	getAllTags:function(request,response){
 
 		Tags.find({}, function(err, tag) {
 		    if (err){
@@ -85,7 +85,7 @@ module.exports = {
     	}).sort({Tag_Code:-1}).limit(20)
 	},
 
-	getActiveTags:function(request,res){
+	getActiveTags:function(request,response){
 		Tags.find({Tag_IsActive:1}, function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});

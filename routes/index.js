@@ -4,7 +4,7 @@ var router = express.Router();
 var UserController  = require('../Controller/userController');
 var TagController   = require('../Controller/tagController');
 var CategoryController = require('../Controller/categoryController');
-// var SupplierController = require('../Controller/supplierController');
+var PostController = require('../Controller/postController');
 // var SetupController = require('../Controller/lutSetupController');
 // var CustomerController = require('../Controller/customerController');
 // var SearchController = require('../Controller/searchController');
@@ -127,6 +127,51 @@ router.get('/getActiveCategories', type,function(req, res) {
         await (CategoryController.getActiveCategories(req,res));
     });
     GetActiveCategories();
+});
+
+
+/****************Posts****************/
+
+router.post('/addPost', type,function(req, res) {
+    var AddPost = async (function (){
+        PostController.addPost(req,res);
+    });
+    AddPost();
+});
+
+router.post('/editPosts', type,function(req, res) {
+    var EditPost = async (function (){
+        await (PostController.editPost(req,res));
+    });
+    EditPost();
+});
+
+router.get('/getPosts', type,function(req, res) {
+    var GetAllPosts= async (function (){
+        await (PostController.getAllPosts(req,res));
+    });
+    GetAllPosts();
+});
+
+router.get('/getActivePosts', type,function(req, res) {
+    var GetActivePosts= async (function (){
+        await (PostController.getActivePosts(req,res));
+    });
+    GetActivePosts();
+});
+
+router.get('/getPostByID', type,function(req, res) {
+    var GetPostByID= async (function (){
+        await (PostController.getPostByID(req,res));
+    });
+    GetPostByID();
+});
+
+router.get('/getPostByTitle', type,function(req, res) {
+    var GetPostByTitle= async (function (){
+        await (PostController.getPostByTitle(req,res));
+    });
+    GetPostByTitle();
 });
 
 module.exports = router;

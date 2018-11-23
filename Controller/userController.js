@@ -4,7 +4,7 @@ var CPUser = require('../Model/nono_cp_users');
 module.exports = {
 
 
-	addUser:function(request,res){
+	addUser:function(request,response){
 		CPUser.getLastCode(function(err,user){
 			if (user) 
 				InsertIntoUser(user.CP_User_Code+1);
@@ -25,12 +25,12 @@ module.exports = {
 			
 			newCPUser.save(function(error, doneadd){
 				if(error){
-					return res.send({
+					return response.send({
 						message: error
 					});
 				}
 				else{
-					return res.send({
+					return response.send({
 						message: true
 					});
 				}
@@ -38,7 +38,7 @@ module.exports = {
 		}
 	},
 
-	editUser:function(request,res){
+	editUser:function(request,response){
 		var newUser = new CPUser;
 		var newvalues = { $set: {
 				CP_User_Name 				: request.body.user_name,
@@ -74,7 +74,7 @@ module.exports = {
 		})
 	},
 
-	getAllUsers:function(request,res){
+	getAllUsers:function(request,response){
 
 		CPUser.find({}, function(err, user) {
 		    if (err){
@@ -87,7 +87,7 @@ module.exports = {
     	}).sort({CP_User_Code:-1}).limit(20)
 	},
 
-	getActiveUsers:function(request,res){
+	getActiveUsers:function(request,response){
 		CPUser.find({CP_User_IsActive:1}, function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});
