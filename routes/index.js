@@ -5,18 +5,18 @@ var UserController  = require('../Controller/userController');
 var TagController   = require('../Controller/tagController');
 var CategoryController = require('../Controller/categoryController');
 var PostController = require('../Controller/postController');
-// var SetupController = require('../Controller/lutSetupController');
+var MediaController = require('../Controller/mediaController');
 // var CustomerController = require('../Controller/customerController');
 // var SearchController = require('../Controller/searchController');
-
-
 
 var passport = require('passport');
 var multer=require('multer');
 var upload=multer({dest:'uploads/'});
-var type=upload.single('upfile');
+var type=upload.single('image');
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
+
+
 
 router.get('/logout', function(request, response) {
 	request.logout();
@@ -172,6 +172,31 @@ router.get('/getPostByTitle', type,function(req, res) {
         await (PostController.getPostByTitle(req,res));
     });
     GetPostByTitle();
+});
+
+
+/****************Media****************/
+
+router.post('/addMedia', type,function(req, res) {
+    // console.log(req.file);
+    var AddMedia = async (function (){
+        MediaController.addMedia(req,res);
+    });
+    AddMedia();
+});
+
+router.post('/editMedia', type,function(req, res) {
+    var EditMedia = async (function (){
+        await (MediaController.editMedia(req,res));
+    });
+    EditMedia();
+});
+
+router.get('/getMediaByID', type,function(req, res) {
+    var GetMediaByID= async (function (){
+        await (MediaController.getMediaByID(req,res));
+    });
+    GetMediaByID();
 });
 
 module.exports = router;
