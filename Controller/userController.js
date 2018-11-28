@@ -1,4 +1,5 @@
 var CPUser = require('../Model/nono_cp_users');
+var Medias = require('../Model/nono_medias');
 
 
 module.exports = {
@@ -75,20 +76,24 @@ module.exports = {
 	},
 
 	getAllUsers:function(request,response){
-
-		CPUser.find({}, function(err, user) {
+		CPUser.find({})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, user) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }
 	        if (user) {
-	        	
 	            response.send(user);
 	        } 
     	}).sort({CP_User_Code:-1}).limit(20)
 	},
 
 	getActiveUsers:function(request,response){
-		CPUser.find({CP_User_IsActive:1}, function(err, field) {
+		CPUser.find({CP_User_IsActive:1})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }

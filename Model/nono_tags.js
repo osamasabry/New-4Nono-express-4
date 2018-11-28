@@ -12,8 +12,16 @@ var nono_TagsSchema = mongoose.Schema({
         Tag_URL                     :String,
         Tag_IsActive                :Number,
 
+},{
+    toJSON: { virtuals: true }
 });
 
+nono_TagsSchema.virtual('Media',{
+    ref: 'nono_media',
+    localField: 'Tag_Feature dImage_Media_ID',
+    foreignField: 'Media_Code',
+    justOne: false // for many-to-1 relationships
+});
 
 var Tags = module.exports = mongoose.model('nono_tag', nono_TagsSchema);
 

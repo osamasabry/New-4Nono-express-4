@@ -1,4 +1,5 @@
 var Tags = require('../Model/nono_tags');
+var Medias = require('../Model/nono_medias');
 
 
 module.exports = {
@@ -73,8 +74,10 @@ module.exports = {
 	},
 
 	getAllTags:function(request,response){
-
-		Tags.find({}, function(err, tag) {
+		Tags.find({})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, tag) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }
@@ -86,7 +89,10 @@ module.exports = {
 	},
 
 	getActiveTags:function(request,response){
-		Tags.find({Tag_IsActive:1}, function(err, field) {
+		Tags.find({Tag_IsActive:1})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }

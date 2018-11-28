@@ -1,4 +1,5 @@
 var Categories = require('../Model/nono_categories');
+var Medias = require('../Model/nono_medias');
 
 
 module.exports = {
@@ -72,7 +73,10 @@ module.exports = {
 	},
 
 	getAllCategories:function(request,response){
-		Categories.find({}, function(err, Category) {
+		Categories.find({})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, Category) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }
@@ -84,7 +88,10 @@ module.exports = {
 	},
 
 	getActiveCategories:function(request,response){
-		Categories.find({Category_IsActive:1}, function(err, field) {
+		Categories.find({Category_IsActive:1})
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.lean()
+		.exec(function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }

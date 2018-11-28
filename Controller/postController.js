@@ -1,4 +1,8 @@
 var Posts = require('../Model/nono_posts');
+var Categories = require('../Model/nono_categories');
+var Tags = require('../Model/nono_tags');
+var Medias = require('../Model/nono_medias');
+var CPUser = require('../Model/nono_cp_users');
 
 
 module.exports = {
@@ -85,7 +89,13 @@ module.exports = {
 	},
 
 	getAllPosts:function(request,response){
-		Posts.find({}, function(err, post) {
+		Posts.find({}) 
+		.populate({ path: 'Category', select: 'Category_Code Category_Name' })
+		.populate({ path: 'Tag', select: 'Tag_Code Tag_Name' })
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.populate({ path: 'User', select: 'CP_User_Code CP_User_Name' })
+		.lean()
+		.exec(function(err, post) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }
@@ -97,7 +107,13 @@ module.exports = {
 	},
 
 	getActivePosts:function(request,response){
-		Posts.find({Post_Status:1}, function(err, field) {
+		Posts.find({Post_Status:1})
+		.populate({ path: 'Category', select: 'Category_Code Category_Name' })
+		.populate({ path: 'Tag', select: 'Tag_Code Tag_Name' })
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.populate({ path: 'User', select: 'CP_User_Code CP_User_Name' })
+		.lean()
+		.exec(function(err, field) {
 		    if (err){
 		    	response.send({message: 'Error'});
 		    }
@@ -110,7 +126,13 @@ module.exports = {
 
 	getPostByID:function(request,response){
 		var Searchquery = Number(request.body.row_id); 
-		Posts.find({'Post_Code':Searchquery},function(err, post) {
+		Posts.find({'Post_Code':Searchquery})
+		.populate({ path: 'Category', select: 'Category_Code Category_Name' })
+		.populate({ path: 'Tag', select: 'Tag_Code Tag_Name' })
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.populate({ path: 'User', select: 'CP_User_Code CP_User_Name' })
+		.lean()
+		.exec(function(err, post) {
 			if (err){
 	    		return response.send({
 					message: err
@@ -131,7 +153,13 @@ module.exports = {
 
 	getPostByTitle:function(request,response){
 		var Searchquery = request.body.row_id; 
-		Posts.find({'Post_Title':Searchquery},function(err, post) {
+		 Posts.find({'Post_Title':Searchquery})
+		.populate({ path: 'Category', select: 'Category_Code Category_Name' })
+		.populate({ path: 'Tag', select: 'Tag_Code Tag_Name' })
+		.populate({ path: 'Media', select: 'Media_Code Media_Title' })
+		.populate({ path: 'User', select: 'CP_User_Code CP_User_Name' })
+		.lean()
+		.exec(function(err, post) {
 			if (err){
 	    		return response.send({
 					message: err

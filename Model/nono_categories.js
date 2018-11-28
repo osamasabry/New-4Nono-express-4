@@ -12,8 +12,16 @@ var nono_CategorySchema = mongoose.Schema({
         Category_URL                        :String,
         Category_ParentCategory_Category_ID :Number,
         Category_IsActive                   :Number,
+},{
+    toJSON: { virtuals: true }
 });
 
+nono_CategorySchema.virtual('Media',{
+    ref: 'nono_media',
+    localField: 'Category_FeaturedImage_Media_ID',
+    foreignField: 'Media_Code',
+    justOne: false // for many-to-1 relationships
+});
 
 
 var Category = module.exports = mongoose.model('nono_category', nono_CategorySchema);
