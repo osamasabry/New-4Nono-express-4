@@ -3,7 +3,7 @@
 var LocalStrategy    = require('passport-local').Strategy;
 
 
-var User       = require('../Model/AccountModel/nono_cp_users');
+var User       = require('../Model/nono_cp_users');
 
 // console.log(User);
 

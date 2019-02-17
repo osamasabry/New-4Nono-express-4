@@ -24,9 +24,9 @@ require('./config/passport')(passport);
 
 var app = express();
 
-// db.connect(process.env.rxpProductionDBConnection,{useNewUrlParser: true});
+// db.connect(process.env.hcmProductionDBConnection,{useNewUrlParser: true});
 
-db.connect("mongodb://localhost:27017/Medical" ,{useNewUrlParser: true});
+db.connect("mongodb://localhost:27017/4nono");
 
 
 app.use(cors({credentials: true, origin: true}))

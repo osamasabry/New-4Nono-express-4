@@ -15,12 +15,12 @@ var nono_CpUserSchema = mongoose.Schema({
 });
 
 
-// nono_CpUserSchema.virtual('Media',{
-//     ref: 'nono_media',
-//     localField: 'CP_User_ProfilePic_Media_ID',
-//     foreignField: 'Media_Code',
-//     justOne: false // for many-to-1 relationships
-// });
+nono_CpUserSchema.virtual('Media',{
+    ref: 'nono_media',
+    localField: 'CP_User_ProfilePic_Media_ID',
+    foreignField: 'Media_Code',
+    justOne: false // for many-to-1 relationships
+});
 
 
 
